@@ -1,0 +1,290 @@
+## 9.1.3
+
+- Modern mode only: preserve repeated and leading post-replacement delimiters during word-boundary truncation, instead of collapsing them to a single separator. Legacy output and public `smart_truncate` are unchanged (aarush, #204).
+- Add tests for CLI interruption and legacy backend error contracts. No output change (dyda5505-cloud, #203).
+
+## 9.1.2
+
+- Skip the transliteration backend for ASCII-only input under both algorithms, avoiding the ~3 MB text-unidecode table import for the common ASCII case. Output is unchanged, including the frozen legacy differential (Rafael Borja, #201).
+
+## 9.1.1
+
+- Modern mode only: avoid emitting a trailing separator when a hard cut truncates through repeated post-replacement delimiters, keeping the delimiter run with the next word that fits. Legacy output and public `smart_truncate` are unchanged (曾楚笑, #200).
+
+## 9.1.0
+
+- Modern mode only: decode uppercase `&#X..;` hexadecimal references as HTML allows, in addition to lowercase `&#x..;`. Legacy output is unchanged (Rupayon Haldar, #195).
+- Modern mode only: preserve post-replacement output when the whole slug already fits `max_length`, so intentional repeated/trailing delimiters are not collapsed at the length limit. Public `smart_truncate` is unchanged (emme1t, #193).
+- Fix `add_uppercase_char` to apply insertions atomically, leaving the input list unchanged if iteration fails. Built-in transliteration tables are unaffected (Cristian Ramirez, #194).
+- Modern mode only: validate argument types up front, raising `TypeError` for a `bool`/non-int `max_length` (`bool` is an `int` subclass) or a non-str `separator`. Legacy behavior is unchanged and still treats `max_length=True` as its historical single-character truncation (Jon Bailey, #196).
+
+## 9.0.0 — unreleased
+
+- Add keyword-only `algorithm='legacy'` (permanent default) and explicit `algorithm='modern'` opt-in, plus CLI `--algorithm`. Preserve historical default entity ordering, numeric handling, iterator consumption, separator truncation, and public `smart_truncate` behavior.
+- Preserve legacy `auto` backend selection and two-pass replacement defaults; add explicit `backend` and `replacement_stage` keyword-only options and matching CLI flags.
+- Add opt-in AnyASCII extra without removing or changing the base text-unidecode dependency.
+- Forward CLI `--regex-pattern` (Jacobo de Vera, #176; report by @peter-bloomfield, #175).
+- Modern mode only: decode entities before transliteration; handle invalid numeric references per match, including surrogate references (#178, #181, #187).
+- Modern mode only: materialize replacement rules and stopword iterables consistently; preserve bytes/bytearray UTF-8 input with clear rejection of unsupported types (#183, #190).
+- Modern mode only: budget internal tokens using emitted separator widths, support empty separators, and preserve literal word characters that match delimiters. Public smart_truncate remains unchanged (#47, #185, #186).
+- Add regression coverage for whitespace, ordinals, backend-specific output, replacement stages, CLI execution, and installed artifacts.
+- Move package metadata to pyproject.toml, retain the typed marker and source tests, and remove the unsafe publish/upload/tag shortcut.
+- Document output changes, backend license distinctions, compatibility limits, and migration precautions in docs/release-9/migration.md.
+
+- Support Python 3.14.
+- Drop support for Python 3.9 and lower.
+- Use tox for local test runs and in CI.
+- Test the project against both `unidecode` and `text_unidecode`.
+- Fix type annotation issues identified by mypy.
+- Run CI against pull requests.
+- Fix package build warnings.
+
+## 8.0.4
+
+- Properly handle uppercase special characters (@mib1185 - thx)
+
+## 8.0.3
+
+- Drop compatibility for unsupported Python Version (@Viicos - thx)
+- Fix pattern types. 
+
+## 8.0.2
+
+- Normalize text before converting to unicode. (@chuckyblack - thx)
+
+## 8.0.1
+
+- Added license notice to readme (@C-nit - thx)
+
+## 8.0.0
+
+- By default, prefer unidecode if installed (@enkidulan - thx)
+
+## 7.0.0
+
+- Drop python 3.6, add python 3.11 (@hugovk - thx)
+
+## 6.1.2
+
+- Reintroduce the cli options
+
+## 6.1.1
+
+- Remove type hinting (temporarily)
+
+## 6.1.0
+
+- Add `allow_unicode` flag to allow unicode characters in the slug
+
+## 6.0.1
+
+- Rework regex_pattern to mean the opposite (disallowed chars instead of allowed)
+- Thanks to @yyyyyyyan for the initial PR followed by the final PR by @mrezzamoradi
+
+## 6.0.0
+
+- Enable github action
+- Remove tox, as we run the test on github action, the end users can refer to those test
+
+## 5.0.2
+
+- Enable twine publish
+
+## 5.0.1
+
+- Drop support for python 2.7, 3.5 & tox, clean up
+
+## 5.0.0
+
+- Add support for Py 3.9 - added tox (@jon-betts - Thx)
+- Drop support for python 2.7, 3.5 & friends
+
+## 4.0.1
+
+- Add support for Py 3.8
+- Last version with `official` python 2.7 and <= 3.5 support
+
+## 4.0.0
+
+- Drop support from 2.6, & < 3.4.5
+
+## 3.0.6
+
+- Fixed encoding in special.py
+
+## 3.0.5
+
+- Add test for pre-translation (e.g German Umlaut)
+- Add special char supports (optional Use)
+
+## 3.0.4
+
+- Now supporting text-unidecode>=1.3
+- Now supporting Unidecode>=1.1.1
+
+## 3.0.3
+
+- Remove unicode chars from file
+
+## 3.0.2
+
+- Add official support of Py 3.7
+
+## 3.0.1
+
+- Add test.py to manifest
+
+## 3.0.0
+
+- Upgrade Unidecode
+- Promote text-unidecode as the primary decoding package
+- Add Unidecode as an optional extra. "pip install python-slugify[unidecode]"
+
+## 2.0.1
+
+- Add replacements option e.g. [['|', 'or'], ['%', 'percent'], ['-', '_']] (@andriyor)
+
+## 2.0.0
+
+- Fix alternative dependency installation
+
+## 1.2.6
+
+- Add support for case sensitive slugs (@s-m-e)
+
+## 1.2.5
+
+- Add support for using text-unidecode (@bolkedebruin)
+- Switch to pycodestyle instead of pep8
+
+## 1.2.4
+
+- Remove build artifacts during packaging
+- Simplify the setup.py file (@reece)
+
+## 1.2.3
+
+- Republish - possible corrupt 1.2.2 build
+
+## 1.2.2
+
+- Add `regex_pattern` option. (@vrbaskiz)
+- Add Python 3.6 support
+
+## 1.2.1
+
+- Including certain files (e.g. license.md) in sdists via MANIFEST.in (@proinsias)
+- Relax licensing by moving from BSD to MIT
+- Add Python 3.5 support
+- Add more tests
+
+## 1.2.0
+
+Backward incompatible change: (@fabiocaccamo)
+
+- In version < 1.2.0 all single quotes ( ' ) were removed, and
+  moving forward, >= 1.2.0, they will be replaced with ( - ).
+  Example:
+  < 1.2.0 -- ('C\'est déjà l\'été.' -> "cest-deja-lete")
+  > = 1.2.0 -- ('C\'est déjà l\'été.' -> "c-est-deja-l-ete")
+
+## 1.1.4
+
+Bugfix:
+
+- Add more test cases, dropped `official` support for python 3.2
+
+## 1.1.3
+
+Bugfix:
+
+- Handle unichar in python 3.x
+
+## 1.1.2
+
+Enhancement:
+
+- Ability to remove `stopwords` from string
+
+## 1.0.2
+
+Enhancement:
+
+- A new PyPI release
+
+## 1.0.1
+
+Enhancement:
+
+- Promoting to production grade
+
+## 0.1.1
+
+Enhancement:
+
+- Added option to save word order
+- Removed 2to3 dependency
+- Added more tests
+
+## 0.1.0
+
+Enhancement:
+
+- Added more test
+- Added test for python 3.4
+
+## 0.0.9
+
+Enhancement:
+
+- Enable console_scripts
+
+## 0.0.8
+
+Enhancement:
+
+- Move logic out of **init**.py
+- Added console_scripts (@ekamil)
+- Updated pep8.sh
+- Added pypy support
+
+## 0.0.7
+
+Enhancement:
+
+- Handle encoding in setup file
+- Update ReadME, ChangeLog, License files
+
+## 0.0.6
+
+Enhancement:
+
+- Update for smart_truncate
+
+## 0.0.5
+
+Features:
+
+- Added Python 3.2 and 3.3 support (work by: arthurdarcet@github)
+
+## 0.0.4
+
+Features:
+
+- Added option to choose non-dash separators (request by: danilodimoia@github)
+
+## 0.0.3
+
+Features:
+
+- Added the ability to truncate slugs (request by: juanriaza@github)
+
+## 0.0.2
+
+Enhancement:
+
+- Incremental update
+
+## 0.0.1
+
+- Initial version

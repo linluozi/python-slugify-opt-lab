@@ -1,0 +1,40 @@
+--- a/slugify/_legacy.py
++++ b/slugify/_legacy.py
+@@ -47,19 +47,29 @@
+     return text
+ 
+ 
++_TRANSLITERATORS: dict[str, tuple[object, object]] = {}
++
++
+ def _transliterate(text: str, backend: Backend) -> str:
+     # Non-behavioral: every backend maps 7-bit ASCII to itself, so skip importing one.
+     if text.isascii():
+         return text
+-    if backend == 'auto':
+-        try:
+-            module = import_module('unidecode')
+-        except ModuleNotFoundError as error:
+-            if error.name != 'unidecode':
+-                raise
+-            module = import_module('text_unidecode')
++    # import_module() runs the full import machinery on every call; reuse the module
++    # while the same importer is in effect (tests may swap it out via mock).
++    cached = _TRANSLITERATORS.get(backend)
++    if cached is not None and cached[0] is import_module:
++        module = cached[1]
+     else:
+-        module = import_module(backend.replace('-', '_'))
++        if backend == 'auto':
++            try:
++                module = import_module('unidecode')
++            except ModuleNotFoundError as error:
++                if error.name != 'unidecode':
++                    raise
++                module = import_module('text_unidecode')
++        else:
++            module = import_module(backend.replace('-', '_'))
++        _TRANSLITERATORS[backend] = (import_module, module)
+     # These third-party modules share a string-to-string API; some are untyped.
+     result: str = getattr(module, 'anyascii' if backend == 'anyascii' else 'unidecode')(text)
+     return result

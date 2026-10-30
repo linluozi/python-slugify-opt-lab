@@ -1,0 +1,1 @@
+{"impl": "optimized", "scale": 8000, "run": 3, "cases": 8000, "elapsed_s": 0.082245, "per_call_us": 10.281, "seed": 20261030, "timer": "time.perf_counter"}

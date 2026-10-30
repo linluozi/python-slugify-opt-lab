@@ -1,0 +1,1 @@
+{"impl": "baseline", "scale": 2000, "run": 4, "cases": 2000, "elapsed_s": 0.10187, "per_call_us": 50.935, "seed": 20261030, "timer": "time.perf_counter"}

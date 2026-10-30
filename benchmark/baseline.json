@@ -1,0 +1,43 @@
+{
+  "environment": {
+    "cpu": "Architecture:                            x86_64 | CPU(s):                                  4 | Model name:                              AMD EPYC 7K62 48-Core Processor",
+    "memory_mb": "3723",
+    "python": "3.12.3",
+    "seed": 20261030,
+    "timer": "time.perf_counter",
+    "warmup": 3,
+    "runs": 5,
+    "scales": [
+      "500",
+      "2000",
+      "8000"
+    ],
+    "command": "python benchmark/bench.py --out benchmark/raw"
+  },
+  "upstream_tests": {
+    "command": "python -m pytest -q --ignore=tests/test_diff.py",
+    "result": "133 passed, 5 skipped, 136 subtests passed in 0.64s"
+  },
+  "scales": {
+    "500": {
+      "median_s": 0.024615,
+      "p25_s": 0.024571,
+      "p75_s": 0.024783,
+      "runs": 5
+    },
+    "2000": {
+      "median_s": 0.101538,
+      "p25_s": 0.101449,
+      "p75_s": 0.101724,
+      "runs": 5
+    },
+    "8000": {
+      "median_s": 0.413362,
+      "p25_s": 0.412939,
+      "p75_s": 0.415334,
+      "runs": 5
+    }
+  },
+  "raw_dir": "benchmark/raw",
+  "raw_files": 30
+}
