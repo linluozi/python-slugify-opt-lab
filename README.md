@@ -28,7 +28,7 @@ Result: `1530 passed` for the differential file; full suite `1663 passed, 5 skip
 | G2 differential identical | 3026 pairs, 0 mismatches | `python -m pytest -q tests/test_diff.py` |
 | G3 median speedup ≥1.15x | 5.04x | `python benchmark/bench.py --out benchmark/raw` |
 | G4 largest scale ≥0.95x | 5.04x at 8000 calls | same as G3 |
-| G5 peak RSS ≤1.10x | 16708 KB vs 16668 KB = 1.002x | `/usr/bin/time -v python /tmp/rss.py optimized` (see baseline.json for the driver) |
+| G5 peak RSS ≤1.10x | 16708 KB vs 16668 KB = 1.002x | `python benchmark/rss.py optimized` vs `python benchmark/rss.py baseline` |
 
 ## Reproduce
 

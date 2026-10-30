@@ -56,5 +56,6 @@
     "pairs": 3026,
     "mismatches": 0,
     "test_command": "python -m pytest -q tests/test_diff.py"
-  }
+  },
+  "peak_rss_command": "python benchmark/rss.py baseline|optimized"
 }

@@ -39,5 +39,6 @@
     }
   },
   "raw_dir": "benchmark/raw",
-  "raw_files": 30
+  "raw_files": 30,
+  "peak_rss_command": "python benchmark/rss.py baseline|optimized"
 }
